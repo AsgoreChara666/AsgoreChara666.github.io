@@ -1,0 +1,4228 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>繪畫大觸寶可夢群 - 黑歷史區</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+            font-weight: 300;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+            font-weight: 600;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+            font-weight: 700;
+        }
+
+        body {
+            background-color: #36393e;
+            color: #dcddde;
+            font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            object-fit: contain;
+        }
+
+        .markdown {
+            max-width: 100%;
+            line-height: 1.3;
+            overflow-wrap: break-word;
+        }
+
+        .preserve-whitespace {
+            white-space: pre-wrap;
+        }
+
+        .spoiler-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .spoiler-text--hidden {
+            cursor: pointer;
+            background-color: #202225;
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .spoiler-text--hidden:hover {
+            background-color: rgba(32, 34, 37, 0.8);
+        }
+
+        .spoiler-text--hidden::selection {
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .quote {
+            display: flex;
+            margin: 0.05em 0;
+        }
+
+        .quote::before {
+            content: "";
+            margin-right: 0.5em;
+            border: 2px solid #4f545c;
+            border-radius: 3px;
+        }
+
+        .pre {
+            background-color: #2f3136;
+            font-family: "Consolas", "Courier New", Courier, monospace;
+        }
+
+        .pre--multiline {
+            margin-top: 0.25em;
+            padding: 0.5em;
+            border: 2px solid #282b30;
+            border-radius: 5px;
+            color: #b9bbbe;
+        }
+
+        .pre--multiline.hljs {
+            background-color: #2f3136;
+            color: #b9bbbe;
+        }
+
+        .pre--inline {
+            padding: 2px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+
+        .mention {
+            border-radius: 3px;
+            padding: 0 2px;
+            color: #7289da;
+            background-color: rgba(114, 137, 218, .1);
+            font-weight: 500;
+        }
+
+        .timestamp {
+            border-radius: 3px;
+            padding: 0 2px;
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .emoji {
+            width: 1.325em;
+            height: 1.325em;
+            margin: 0 0.06em;
+            vertical-align: -0.4em;
+        }
+
+        .emoji--small {
+            width: 1em;
+            height: 1em;
+        }
+
+        .emoji--large {
+            width: 2.8em;
+            height: 2.8em;
+        }
+
+        .preamble {
+            display: grid;
+            margin: 0 0.3em 0.6em 0.3em;
+            max-width: 100%;
+            grid-template-columns: auto 1fr;
+        }
+
+        .preamble__guild-icon-container {
+            grid-column: 1;
+        }
+
+        .preamble__guild-icon {
+            max-width: 88px;
+            max-height: 88px;
+        }
+
+        .preamble__entries-container {
+            grid-column: 2;
+            margin-left: 0.6em;
+        }
+
+        .preamble__entry {
+            font-size: 1.4em;
+            color: #ffffff;
+        }
+
+        .preamble__entry--small {
+            font-size: 1em;
+        }
+
+        .chatlog {
+            max-width: 100%;
+        }
+
+        .chatlog__message-group {
+            display: grid;
+            margin: 0 0.6em;
+            padding: 0.9em 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            grid-template-columns: auto 1fr;
+        }
+
+        .chatlog__reference-symbol {
+            grid-column: 1;
+            margin: 8px 4px 4px 18px;
+            border-left: 2px solid #4f545c;
+            border-top: 2px solid #4f545c;
+            border-radius: 8px 0 0 0;
+        }
+
+        .chatlog__reference {
+            display: flex;
+            grid-column: 2;
+            margin-bottom: 0.25em;
+            font-size: 0.875em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            align-items: center;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-avatar {
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            margin-right: 0.25em;
+        }
+
+        .chatlog__reference-name {
+            margin-right: 0.3em;
+            font-weight: 600;
+        }
+
+        .chatlog__reference-content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__reference-content a:hover {
+            text-decoration: none;
+        }
+
+        .chatlog__reference-link {
+            cursor: pointer;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-link * {
+            display: inline;
+            pointer-events: none;
+        }
+
+        .chatlog__reference-link:hover {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-link:hover *:not(.spoiler-text) {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-edited-timestamp {
+            margin-left: 0.25em;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__author-avatar-container {
+            grid-column: 1;
+            width: 40px;
+            height: 40px;
+            margin-right: 16px;
+        }
+
+        .chatlog__author-avatar {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .chatlog__messages {
+            grid-column: 2;
+            min-width: 50%;
+        }
+
+        .chatlog__author-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .chatlog__timestamp {
+            margin-left: 0.3em;
+            font-size: 0.75em;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__message {
+            padding: 0.1em 0.3em;
+            margin: 0 -0.3em;
+            background-color: transparent;
+            transition: background-color 1s ease;
+        }
+
+        .chatlog__message--highlighted {
+            background-color: rgba(114, 137, 218, 0.2);
+        }
+
+        .chatlog__message--pinned {
+            background-color: rgba(249, 168, 37, 0.05);
+        }
+
+        .chatlog__content {
+            font-size: 0.95em;
+            word-wrap: break-word;
+        }
+
+        .chatlog__edited-timestamp {
+            margin-left: 0.15em;
+            font-size: 0.8em;
+        }
+
+        .chatlog__attachment {
+            display: inline-block;
+            position: relative;
+            margin-top: 0.3em;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden {
+            cursor: pointer;
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatlog__attachment--hidden * {
+            pointer-events: none;
+        }
+
+        .chatlog__attachment-spoiler-caption {
+            display: none;
+            z-index: 999;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0.4em 0.8em;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 20px;
+            color: #dcddde;
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
+            display: block;
+        }
+
+        .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
+            color: #fff;
+        }
+
+        .chatlog__attachment-media {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-media {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic {
+            width: 100%;
+            max-width: 520px;
+            height: 40px;
+            padding: 10px;
+            background-color: #2f3136;
+            border: 1px solid #292b2f;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-generic {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic-icon {
+            float: left;
+            width: 30px;
+            height: 100%;
+            margin-right: 10px;
+        }
+
+        .chatlog__attachment-generic-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+
+        .chatlog__attachment-generic-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__edited-timestamp {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__embed {
+            display: flex;
+            margin-top: 0.3em;
+            max-width: 520px;
+        }
+
+        .chatlog__embed-color-pill {
+            flex-shrink: 0;
+            width: 0.25em;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        .chatlog__embed-color-pill--default {
+            background-color: #202225;
+        }
+
+        .chatlog__embed-content-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5em 0.6em;
+            background-color: rgba(46, 48, 54, 0.3);
+            border: 1px solid rgba(46, 48, 54, 0.6);
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .chatlog__embed-content {
+            display: flex;
+            width: 100%;
+        }
+
+        .chatlog__embed-text {
+            flex: 1;
+        }
+
+        .chatlog__embed-author {
+            display: flex;
+            margin-bottom: 0.3em;
+            align-items: center;
+        }
+
+        .chatlog__embed-author-icon {
+            margin-right: 0.5em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .chatlog__embed-author-name {
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff
+        }
+
+        .chatlog__embed-author-name-link {
+            color: #ffffff;
+        }
+
+        .chatlog__embed-title {
+            margin-bottom: 0.2em;
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-description {
+            font-weight: 500;
+            font-size: 0.85em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 0.5em;
+        }
+
+        .chatlog__embed-field {
+            flex: 0;
+            min-width: 100%;
+            max-width: 506px;
+            padding-top: 0.6em;
+            font-size: 0.875em;
+        }
+
+        .chatlog__embed-field--inline {
+            flex: 1;
+            flex-basis: auto;
+            min-width: 150px;
+        }
+
+        .chatlog__embed-field-name {
+            margin-bottom: 0.2em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-field-value {
+            font-weight: 500;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-thumbnail {
+            flex: 0;
+            margin-left: 1.2em;
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-image-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-image {
+            max-width: 500px;
+            max-height: 400px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-footer {
+            margin-top: 0.6em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-footer-icon {
+            margin-right: 0.2em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .chatlog__embed-footer-text {
+            vertical-align: middle;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .chatlog__embed-plainimage {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-spotify {
+            border: 0;
+        }
+
+        .chatlog__embed-youtube-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-youtube {
+            border: 0;
+            border-radius: 3px;
+        }
+
+        .chatlog__reactions {
+            display: flex;
+        }
+
+        .chatlog__reaction {
+            display: flex;
+            align-items: center;
+            margin: 0.35em 0.1em 0.1em 0.1em;
+            padding: 0.2em 0.35em;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .chatlog__reaction-count {
+            min-width: 9px;
+            margin-left: 0.35em;
+            font-size: 0.875em;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .chatlog__bot-tag {
+            position: relative;
+            top: -.1em;
+            margin-left: 0.3em;
+            padding: 0.05em 0.3em;
+            border-radius: 3px;
+            line-height: 1.3;
+            background-color: #5865F2;
+            color: #ffffff;
+            font-size: 0.625em;
+            font-weight: 500;
+        }
+
+        .postamble {
+            margin: 1.4em 0.3em 0.6em 0.3em;
+            padding: 1em;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .postamble__entry {
+            color: #ffffff;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler-text--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler-text--hidden');
+            }
+            if (element && element.classList.contains('chatlog__attachment--hidden')) {
+                event.preventDefault();
+                element.classList.remove('chatlog__attachment--hidden');
+            }
+        }
+    </script>
+
+    <svg style="display: none">
+        <symbol id="icon-attachment" viewBox="0 0 720 960">
+            <path fill="#f4f5fb" d="M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z" />
+            <path fill="#7789c4" d="M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z" />
+            <path fill="#f4f5fb" d="M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z" />
+            <path fill="#7789c4" d="M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z" />
+        </symbol>
+    </svg>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/fdeba29573abd176ff5fd20ec05d8489-51BDD.png" alt="Guild icon" loading="lazy">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">繪畫大觸寶可夢群</div>
+        <div class="preamble__entry">繪畫區 / 黑歷史區</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="734728787933003796" id="message-734728787933003796" title="Message sent: 20-Jul-20 07:09 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/233_20200720190422-929A2.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/233_20200720190422-929A2.png" alt="Image attachment" title="Image: 233_20200720190422.png (79.62 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="734728813547618367" id="message-734728813547618367" title="Message sent: 20-Jul-20 07:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">黑歷史1</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="734729105882349710" id="message-734729105882349710" title="Message sent: 20-Jul-20 07:11 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/233_20200720191058-00546.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/233_20200720191058-00546.png" alt="Image attachment" title="Image: 233_20200720191058.png (96.93 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="734729386409852968" id="message-734729386409852968" title="Message sent: 20-Jul-20 07:12 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/233_20200720191205-14325.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/233_20200720191205-14325.png" alt="Image attachment" title="Image: 233_20200720191205.png (94.61 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/87796d2be2520635ca864c24d1fc540a-4764F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小天 Katty#2280" data-user-id="561495590803079178" style="color: rgb(215,52,42)">入坑Yourboyfried很深的貓(• ▽ •)(伊斐爾塔爾</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="734729399332765727" id="message-734729399332765727" title="Message sent: 20-Jul-20 07:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我的畫=黑歷史</span>
+
+                        </div>
+                    </div>
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMG_20200714_225244-440E7.jpg">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMG_20200714_225244-440E7.jpg" alt="Image attachment" title="Image: IMG_20200714_225244.jpg (92.86 KB)" loading="lazy">
+                            </a>
+                    </div>
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMG_20200714_144759-2CF9B.jpg">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMG_20200714_144759-2CF9B.jpg" alt="Image attachment" title="Image: IMG_20200714_144759.jpg (219.29 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="734729444895227986" id="message-734729444895227986" title="Message sent: 20-Jul-20 07:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">超級黑歷史xd（我</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/87796d2be2520635ca864c24d1fc540a-4764F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小天 Katty#2280" data-user-id="561495590803079178" style="color: rgb(215,52,42)">入坑Yourboyfried很深的貓(• ▽ •)(伊斐爾塔爾</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="734729469864050768" id="message-734729469864050768" title="Message sent: 20-Jul-20 07:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我的影片=廢片+黑歷史</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="734729505117175888" id="message-734729505117175888" title="Message sent: 20-Jul-20 07:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Xd</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="734729677796671498" id="message-734729677796671498" title="Message sent: 20-Jul-20 07:13 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/225_20200714231615-844B3.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/225_20200714231615-844B3.png" alt="Image attachment" title="Image: 225_20200714231615.png (60.68 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:13 PM</span>
+
+            <div class="chatlog__message " data-message-id="734729679340306502" id="message-734729679340306502" title="Message sent: 20-Jul-20 07:13 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">..............廚餘....</span>
+
+                        </div>
+                    </div>
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/1_20200704102941-FE094.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/1_20200704102941-FE094.png" alt="Image attachment" title="Image: 1_20200704102941.png (282.78 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:13 PM</span>
+
+            <div class="chatlog__message " data-message-id="734729714991628370" id="message-734729714991628370" title="Message sent: 20-Jul-20 07:13 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">黑爆</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="734729757547298886" id="message-734729757547298886" title="Message sent: 20-Jul-20 07:13 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">在在上面</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/87796d2be2520635ca864c24d1fc540a-4764F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小天 Katty#2280" data-user-id="561495590803079178" style="color: rgb(215,52,42)">入坑Yourboyfried很深的貓(• ▽ •)(伊斐爾塔爾</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="734730157897810003" id="message-734730157897810003" title="Message sent: 20-Jul-20 07:15 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><a href="https://youtu.be/JSUWJ0wQkdA">https://youtu.be/JSUWJ0wQkdA</a></span>
+
+                        </div>
+                    </div>
+
+
+                        <div class="chatlog__embed">
+                                <div class="chatlog__embed-color-pill" style="background-color: rgba(255,0,0,255)"></div>
+
+                            <div class="chatlog__embed-content-container">
+                                <div class="chatlog__embed-content">
+                                    <div class="chatlog__embed-text">
+                                            <div class="chatlog__embed-author">
+
+                                                    <span class="chatlog__embed-author-name">
+                                                            <a class="chatlog__embed-author-name-link" href="https://www.youtube.com/channel/UC2S6NIog_n4CKW86AhL7ulw">天使茉莉 Katty</a>
+                                                    </span>
+                                            </div>
+
+                                            <div class="chatlog__embed-title">
+                                                    <a class="chatlog__embed-title-link" href="https://www.youtube.com/watch?v=JSUWJ0wQkdA">
+                                                        <div class="markdown preserve-whitespace">【廢片】【ㄎㄧㄤ片（？】XDD我不知道我在幹嘛</div>
+                                                    </a>
+                                            </div>
+
+                                        <div class="chatlog__embed-youtube-container">
+                                            <iframe class="chatlog__embed-youtube" src="https://www.youtube.com/embed/JSUWJ0wQkdA" width="400" height="225"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="734730188239405087" id="message-734730188239405087" title="Message sent: 20-Jul-20 07:15 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">最黑的影片WWW</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="734730348520407040" id="message-734730348520407040" title="Message sent: 20-Jul-20 07:16 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">小暗：==我還是很傻眼
+本喵：。∀&#176;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="734730416375857152" id="message-734730416375857152" title="Message sent: 20-Jul-20 07:16 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">還是....黑暗面的小暗...不對...暗天....</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/87796d2be2520635ca864c24d1fc540a-4764F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小天 Katty#2280" data-user-id="561495590803079178" style="color: rgb(215,52,42)">入坑Yourboyfried很深的貓(• ▽ •)(伊斐爾塔爾</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="734730669724532736" id="message-734730669724532736" title="Message sent: 20-Jul-20 07:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">小暗：——/那是我還未恢復原本狀態的模樣當然說我是小天的黑暗面也行</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="734730706323898471" id="message-734730706323898471" title="Message sent: 20-Jul-20 07:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">本喵：:P</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 07:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="734730771444793354" id="message-734730771444793354" title="Message sent: 20-Jul-20 07:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">哦…</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="734731467409719346" id="message-734731467409719346" title="Message sent: 20-Jul-20 07:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><s>現實:對了 我的頭像是管理『役割』的少女(翻譯過後意思是....垃圾場的處理人士....)</s></span>
+
+                                <span class="chatlog__edited-timestamp" title="20-Jul-20 07:20 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 08:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="734743266582462505" id="message-734743266582462505" title="Message sent: 20-Jul-20 08:07 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/231_20200718223311-5CBDF.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/231_20200718223311-5CBDF.png" alt="Image attachment" title="Image: 231_20200718223311.png (755.07 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="734743306470162453" id="message-734743306470162453" title="Message sent: 20-Jul-20 08:07 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">恩黑歷史</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="734743368663564339" id="message-734743368663564339" title="Message sent: 20-Jul-20 08:07 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我還忘了畫尾巴我去</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 08:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="734743402746347570" id="message-734743402746347570" title="Message sent: 20-Jul-20 08:07 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">應該還沒是歷史吧<img loading="lazy" class="emoji " alt="IDK" title="IDK" src="https://cdn.discordapp.com/emojis/695867782557990952.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 08:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="734743473164517468" id="message-734743473164517468" title="Message sent: 20-Jul-20 08:08 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">手的地方太細qwq</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 08:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="734743748398940170" id="message-734743748398940170" title="Message sent: 20-Jul-20 08:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">對呀 Vegetables English 都有一段歷史了(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 08:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="734743795450511403" id="message-734743795450511403" title="Message sent: 20-Jul-20 08:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">030ㄏ</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/b50adff099924dd5e6b72d13f77eb9d7-3D8A8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="MEE6#4876" data-user-id="159985870458322944" style="color: rgb(187,115,219)">MEE6</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">20-Jul-20 08:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="734743796360937482" id="message-734743796360937482" title="Message sent: 20-Jul-20 08:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">GG <span class="mention" title="Snow wolf#8956">@Snow wolf</span>, you just advanced to level 25!</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 08:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="734744173881851914" id="message-734744173881851914" title="Message sent: 20-Jul-20 08:11 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/49_20200124110143-E1476.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/49_20200124110143-E1476.png" alt="Image attachment" title="Image: 49_20200124110143.png (743.09 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 08:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="734744217016074241" id="message-734744217016074241" title="Message sent: 20-Jul-20 08:11 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">XDDDd</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">20-Jul-20 08:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="734744267632803910" id="message-734744267632803910" title="Message sent: 20-Jul-20 08:11 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">黑<img loading="lazy" class="emoji " alt="IDK" title="IDK" src="https://cdn.discordapp.com/emojis/695867782557990952.png"> （？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">21-Jul-20 07:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="735094520076828712" id="message-735094520076828712" title="Message sent: 21-Jul-20 07:23 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMAG0099_1-EA26F.jpg">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMAG0099_1-EA26F.jpg" alt="Image attachment" title="Image: IMAG0099_1.jpg (615.18 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 07:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="737988839280476170" id="message-737988839280476170" title="Message sent: 29-Jul-20 07:04 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/214-008F8.jpg">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/214-008F8.jpg" alt="Image attachment" title="Image: 214.jpg (128 KB)" loading="lazy">
+                            </a>
+                    </div>
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/207_20200608201949-FCF37.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/207_20200608201949-FCF37.png" alt="Image attachment" title="Image: 207_20200608201949.png (810.9 KB)" loading="lazy">
+                            </a>
+                    </div>
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/236_20200721205058-946B6.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/236_20200721205058-946B6.png" alt="Image attachment" title="Image: 236_20200721205058.png (371.42 KB)" loading="lazy">
+                            </a>
+                    </div>
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/238_20200723130239-FF8E4.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/238_20200723130239-FF8E4.png" alt="Image attachment" title="Image: 238_20200723130239.png (381.43 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="737988946717311056" id="message-737988946717311056" title="Message sent: 29-Jul-20 07:04 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">黑爆了</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/87796d2be2520635ca864c24d1fc540a-4764F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小天 Katty#2280" data-user-id="561495590803079178" style="color: rgb(215,52,42)">入坑Yourboyfried很深的貓(• ▽ •)(伊斐爾塔爾</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 07:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="737989254751322163" id="message-737989254751322163" title="Message sent: 29-Jul-20 07:05 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">哦凎最後一張圖好猛哦</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 07:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="737989332916240404" id="message-737989332916240404" title="Message sent: 29-Jul-20 07:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">哪裡黑了</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="737989350104498296" id="message-737989350104498296" title="Message sent: 29-Jul-20 07:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">哦 背景(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 07:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="737990504058191904" id="message-737990504058191904" title="Message sent: 29-Jul-20 07:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我有修改</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 07:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="737995253956739122" id="message-737995253956739122" title="Message sent: 29-Jul-20 07:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">忽然發現</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="737995280003366962" id="message-737995280003366962" title="Message sent: 29-Jul-20 07:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">他脖子多了東西</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="737995386337361941" id="message-737995386337361941" title="Message sent: 29-Jul-20 07:30 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">那是啥˙ˇ˙</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="738005842296832021" id="message-738005842296832021" title="Message sent: 29-Jul-20 08:11 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">電擊項圈030他不聽話或造反他哥會電他030</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="738006101194178570" id="message-738006101194178570" title="Message sent: 29-Jul-20 08:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">峎：我不聽&#215;3qwq
+ㄏ是不想回憶到哦030</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="738006434763243592" id="message-738006434763243592" title="Message sent: 29-Jul-20 08:14 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">那拆下來的話拆的人會怎麼樣</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="738006633371795579" id="message-738006633371795579" title="Message sent: 29-Jul-20 08:14 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">跑走啊—3—</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="738006695552352297" id="message-738006695552352297" title="Message sent: 29-Jul-20 08:15 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">總要逃離吧—3—</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007015875674152" id="message-738007015875674152" title="Message sent: 29-Jul-20 08:16 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">那拆的人是滅殺勒(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007096582209588" id="message-738007096582209588" title="Message sent: 29-Jul-20 08:16 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我哪知—3—</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="738007356264284260" id="message-738007356264284260" title="Message sent: 29-Jul-20 08:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">峎：自閉中）為什麽我有哥哥qwq
+你媽強啊030
+峎：自閉中）qwq</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007501706100800" id="message-738007501706100800" title="Message sent: 29-Jul-20 08:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">不對</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="738007530684416004" id="message-738007530684416004" title="Message sent: 29-Jul-20 08:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">是你ㄅ強(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007563982864435" id="message-738007563982864435" title="Message sent: 29-Jul-20 08:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="just_joking" title="just_joking" src="https://cdn.discordapp.com/emojis/695868270560935946.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007569016029196" id="message-738007569016029196" title="Message sent: 29-Jul-20 08:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">所以你ㄇ才會強</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007599504687105" id="message-738007599504687105" title="Message sent: 29-Jul-20 08:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="R18" title="R18" src="https://cdn.discordapp.com/emojis/705044639505317899.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007653338316822" id="message-738007653338316822" title="Message sent: 29-Jul-20 08:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="Afried_to_explosion" title="Afried_to_explosion" src="https://cdn.discordapp.com/emojis/703952264993177612.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007690219094057" id="message-738007690219094057" title="Message sent: 29-Jul-20 08:19 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="What_did_I_See" title="What_did_I_See" src="https://cdn.discordapp.com/emojis/715936882365562880.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007772486172693" id="message-738007772486172693" title="Message sent: 29-Jul-20 08:19 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="WHAT" title="WHAT" src="https://cdn.discordapp.com/emojis/714025441559576626.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007816219918336" id="message-738007816219918336" title="Message sent: 29-Jul-20 08:19 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="U_" title="U_" src="https://cdn.discordapp.com/emojis/695869313227423825.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007890362630146" id="message-738007890362630146" title="Message sent: 29-Jul-20 08:19 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">欸欸我想到一個做死的挑戰(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007918221328476" id="message-738007918221328476" title="Message sent: 29-Jul-20 08:19 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">030</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007942686834728" id="message-738007942686834728" title="Message sent: 29-Jul-20 08:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我們直接用表情符號溝通(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="738007978266984488" id="message-738007978266984488" title="Message sent: 29-Jul-20 08:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">淦</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="738008016632283176" id="message-738008016632283176" title="Message sent: 29-Jul-20 08:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="just_joking" title="just_joking" src="https://cdn.discordapp.com/emojis/695868270560935946.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="738008058965393448" id="message-738008058965393448" title="Message sent: 29-Jul-20 08:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">問小天要不要參加</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="738008071644643369" id="message-738008071644643369" title="Message sent: 29-Jul-20 08:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="just_joking" title="just_joking" src="https://cdn.discordapp.com/emojis/695868270560935946.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="738008108827410452" id="message-738008108827410452" title="Message sent: 29-Jul-20 08:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="Afried_to_explosion" title="Afried_to_explosion" src="https://cdn.discordapp.com/emojis/703952264993177612.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="738008129291157534" id="message-738008129291157534" title="Message sent: 29-Jul-20 08:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="Where_is_cat" title="Where_is_cat" src="https://cdn.discordapp.com/emojis/705044423175831683.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/87796d2be2520635ca864c24d1fc540a-4764F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小天 Katty#2280" data-user-id="561495590803079178" style="color: rgb(215,52,42)">入坑Yourboyfried很深的貓(• ▽ •)(伊斐爾塔爾</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 08:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="738012321036894239" id="message-738012321036894239" title="Message sent: 29-Jul-20 08:37 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">本喵：(&#180;･ω･)有人找貓嗎</span>
+
+                                <span class="chatlog__edited-timestamp" title="29-Jul-20 09:54 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-20 09:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="738031264652853330" id="message-738031264652853330" title="Message sent: 29-Jul-20 09:52 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="cat_slime" title="cat_slime" src="https://cdn.discordapp.com/emojis/695868080215293952.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-20 11:38 AM</span>
+
+            <div class="chatlog__message " data-message-id="738239028326957148" id="message-738239028326957148" title="Message sent: 30-Jul-20 11:38 AM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/242_20200730104403-75B3B.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/242_20200730104403-75B3B.png" alt="Image attachment" title="Image: 242_20200730104403.png (663.36 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="738239405403275355" id="message-738239405403275355" title="Message sent: 30-Jul-20 11:39 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="just_joking" title="just_joking" src="https://cdn.discordapp.com/emojis/695868270560935946.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6a7fd6c5164f5cd7d187c2b1f5d48acc-A4424.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="庭瑋OuO#1942" data-user-id="612220269855244290" style="color: rgb(36,243,122)">我愛我的雪酪鯊魚（哲爾尼亞斯）</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-20 04:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="738310056541552640" id="message-738310056541552640" title="Message sent: 30-Jul-20 04:20 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/29_20200406232416-3A436.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/29_20200406232416-3A436.png" alt="Image attachment" title="Image: 29_20200406232416.png (5.03 MB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 05:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="749929454033436713" id="message-749929454033436713" title="Message sent: 31-Aug-20 05:51 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/15_20200826235228-18B65.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/15_20200826235228-18B65.png" alt="Image attachment" title="Image: 15_20200826235228.png (224.06 KB)" loading="lazy">
+                            </a>
+                    </div>
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/261_20200830161620-D6C67.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/261_20200830161620-D6C67.png" alt="Image attachment" title="Image: 261_20200830161620.png (231.35 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/87796d2be2520635ca864c24d1fc540a-4764F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小天 Katty#2280" data-user-id="561495590803079178" style="color: rgb(215,52,42)">入坑Yourboyfried很深的貓(• ▽ •)(伊斐爾塔爾</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 05:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="749929864647278703" id="message-749929864647278703" title="Message sent: 31-Aug-20 05:53 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMG20200709162056-95817.jpg">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMG20200709162056-95817.jpg" alt="Image attachment" title="Image: IMG20200709162056.jpg (3.66 MB)" loading="lazy">
+                            </a>
+                    </div>
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMG_20200831_161318-D393E.jpg">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMG_20200831_161318-D393E.jpg" alt="Image attachment" title="Image: IMG_20200831_161318.jpg (739.88 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="thumbsup">
+                                <img class="emoji emoji--small" alt="&#128077;" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/1f44d-B3F5F.svg" loading="lazy">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                            <div class="chatlog__reaction" title="laughing">
+                                <img class="emoji emoji--small" alt="&#128518;" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/1f606-6F8AE.svg" loading="lazy">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 06:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="749933011998474368" id="message-749933011998474368" title="Message sent: 31-Aug-20 06:06 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/259_20200825205134-153FB.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/259_20200825205134-153FB.png" alt="Image attachment" title="Image: 259_20200825205134.png (59.32 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 06:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="749938530905620481" id="message-749938530905620481" title="Message sent: 31-Aug-20 06:27 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMAG0113-DA3FF.jpg">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMAG0113-DA3FF.jpg" alt="Image attachment" title="Image: IMAG0113.jpg (2.9 MB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 06:32 PM</span>
+
+            <div class="chatlog__message " data-message-id="749939628244598864" id="message-749939628244598864" title="Message sent: 31-Aug-20 06:32 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/22_20200831182935-EE95C.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/22_20200831182935-EE95C.png" alt="Image attachment" title="Image: 22_20200831182935.png (492.26 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="heart">
+                                <img class="emoji emoji--small" alt="❤️" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/2764-02CD4.svg" loading="lazy">
+                                <span class="chatlog__reaction-count">2</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 06:33 PM</span>
+
+            <div class="chatlog__message " data-message-id="749939832540758067" id="message-749939832540758067" title="Message sent: 31-Aug-20 06:33 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">好看呀</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 06:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="749940105954721832" id="message-749940105954721832" title="Message sent: 31-Aug-20 06:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">不好看（？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 06:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="749940165350522891" id="message-749940165350522891" title="Message sent: 31-Aug-20 06:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你看我的</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="749940178717507585" id="message-749940178717507585" title="Message sent: 31-Aug-20 06:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">在看你的</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 06:38 PM</span>
+
+            <div class="chatlog__message " data-message-id="749941083147862147" id="message-749941083147862147" title="Message sent: 31-Aug-20 06:38 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">因為我用</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="749941113007374407" id="message-749941113007374407" title="Message sent: 31-Aug-20 06:38 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">手機（嗎（？？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6a7fd6c5164f5cd7d187c2b1f5d48acc-A4424.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="庭瑋OuO#1942" data-user-id="612220269855244290" style="color: rgb(36,243,122)">我愛我的雪酪鯊魚（哲爾尼亞斯）</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 06:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="749942941681975346" id="message-749942941681975346" title="Message sent: 31-Aug-20 06:45 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/27_20200823123250-29F6D.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/27_20200823123250-29F6D.png" alt="Image attachment" title="Image: 27_20200823123250.png (539.94 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/f3f4930c513074bf49c9110310257be5-A2F49.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Snow wolf#8956" data-user-id="703920018156421160" style="">Snow wolf</span>
+
+
+        <span class="chatlog__timestamp">31-Aug-20 07:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="749948996260331590" id="message-749948996260331590" title="Message sent: 31-Aug-20 07:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="just_joking" title="just_joking" src="https://cdn.discordapp.com/emojis/695868270560935946.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/deca908f31d650a0c651a4163e094847-03E57.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="&#128192;ドコモ#0154" data-user-id="464389663679971341" style="color: rgb(36,243,122)">武士（萊希拉姆）</span>
+
+
+        <span class="chatlog__timestamp">23-Nov-20 06:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="780373921408876585" id="message-780373921408876585" title="Message sent: 23-Nov-20 06:07 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/unknown-F0055.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/unknown-F0055.png" alt="Image attachment" title="Image: unknown.png (516.29 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780373927616184342" id="message-780373927616184342" title="Message sent: 23-Nov-20 06:07 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">好久沒畫 黑歷史QQ</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">23-Nov-20 06:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="780374393346981888" id="message-780374393346981888" title="Message sent: 23-Nov-20 06:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我覺得不錯欸˙ˇ˙(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/87796d2be2520635ca864c24d1fc540a-4764F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小天 Katty#2280" data-user-id="561495590803079178" style="color: rgb(215,52,42)">入坑Yourboyfried很深的貓(• ▽ •)(伊斐爾塔爾</span>
+
+
+        <span class="chatlog__timestamp">23-Nov-20 06:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="780374506698309662" id="message-780374506698309662" title="Message sent: 23-Nov-20 06:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><strong>真•黑歷史</strong></span>
+
+                                <span class="chatlog__edited-timestamp" title="23-Nov-20 06:09 PM">(edited)</span>
+                        </div>
+                    </div>
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/92_20201019164751-8FFA3.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/92_20201019164751-8FFA3.png" alt="Image attachment" title="Image: 92_20201019164751.png (782.63 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="heart">
+                                <img class="emoji emoji--small" alt="❤️" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/2764-02CD4.svg" loading="lazy">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">23-Nov-20 06:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="780374641373085766" id="message-780374641373085766" title="Message sent: 23-Nov-20 06:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">明明就很厲害˙ˇ˙</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/87796d2be2520635ca864c24d1fc540a-4764F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小天 Katty#2280" data-user-id="561495590803079178" style="color: rgb(215,52,42)">入坑Yourboyfried很深的貓(• ▽ •)(伊斐爾塔爾</span>
+
+
+        <span class="chatlog__timestamp">23-Nov-20 06:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="780385925552275480" id="message-780385925552275480" title="Message sent: 23-Nov-20 06:55 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">並沒有這回事</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol"></div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+                <span class="chatlog__reference-name" title="銀月#4086" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+                <div class="chatlog__reference-content">
+                    <span class="chatlog__reference-link" onclick="scrollToMessage(event, &#39;780374393346981888&#39;)">
+我覺得不錯欸˙ˇ˙(？                    </span>
+
+                </div>
+        </div>
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/deca908f31d650a0c651a4163e094847-03E57.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="&#128192;ドコモ#0154" data-user-id="464389663679971341" style="color: rgb(36,243,122)">武士（萊希拉姆）</span>
+
+
+        <span class="chatlog__timestamp">23-Nov-20 10:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="780444368342745160" id="message-780444368342745160" title="Message sent: 23-Nov-20 10:47 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">乃一起畫XD</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">23-Nov-20 10:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="780445024986595329" id="message-780445024986595329" title="Message sent: 23-Nov-20 10:49 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我可能畫出宇宙的真理(無法理解的東西)(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/deca908f31d650a0c651a4163e094847-03E57.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="&#128192;ドコモ#0154" data-user-id="464389663679971341" style="color: rgb(36,243,122)">武士（萊希拉姆）</span>
+
+
+        <span class="chatlog__timestamp">23-Nov-20 10:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="780445150198366218" id="message-780445150198366218" title="Message sent: 23-Nov-20 10:50 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">沒事WWWW</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">23-Nov-20 10:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="780445624305975357" id="message-780445624305975357" title="Message sent: 23-Nov-20 10:52 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="just_joking" title="just_joking" src="https://cdn.discordapp.com/emojis/695868270560935946.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/deca908f31d650a0c651a4163e094847-03E57.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="&#128192;ドコモ#0154" data-user-id="464389663679971341" style="color: rgb(36,243,122)">武士（萊希拉姆）</span>
+
+
+        <span class="chatlog__timestamp">04-Dec-20 01:26 AM</span>
+
+            <div class="chatlog__message " data-message-id="784108190488723537" id="message-784108190488723537" title="Message sent: 04-Dec-20 01:26 AM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMG_20201204_012245_HDR-5F520.jpg">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/IMG_20201204_012245_HDR-5F520.jpg" alt="Image attachment" title="Image: IMG_20201204_012245_HDR.jpg (4.91 MB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="784108192929415178" id="message-784108192929415178" title="Message sent: 04-Dec-20 01:26 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">現在畫畫都吃我以前學的老本了哭哭</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/deca908f31d650a0c651a4163e094847-03E57.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="&#128192;ドコモ#0154" data-user-id="464389663679971341" style="color: rgb(36,243,122)">武士（萊希拉姆）</span>
+
+
+        <span class="chatlog__timestamp">07-Dec-20 10:41 PM</span>
+
+            <div class="chatlog__message " data-message-id="785516324675387458" id="message-785516324675387458" title="Message sent: 07-Dec-20 10:41 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/unknown-971B5.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/unknown-971B5.png" alt="Image attachment" title="Image: unknown.png (101.25 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="785516327980498946" id="message-785516327980498946" title="Message sent: 07-Dec-20 10:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">塗鴉</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">25-Dec-20 10:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="792033963031134218" id="message-792033963031134218" title="Message sent: 25-Dec-20 10:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">試畫手
+我到底在畫甚麼...</span>
+
+                        </div>
+                    </div>
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/81_20201225221554-E3C85.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/81_20201225221554-E3C85.png" alt="Image attachment" title="Image: 81_20201225221554.png (129.88 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="thumbsup">
+                                <img class="emoji emoji--small" alt="&#128077;" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/1f44d-B3F5F.svg" loading="lazy">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol"></div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+                <span class="chatlog__reference-name" title="鬼狐律希#4697" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+                <div class="chatlog__reference-content">
+                    <span class="chatlog__reference-link" onclick="scrollToMessage(event, &#39;792033963031134218&#39;)">
+試畫手
+我到底在畫甚麼...                    </span>
+
+                </div>
+        </div>
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/deca908f31d650a0c651a4163e094847-03E57.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="&#128192;ドコモ#0154" data-user-id="464389663679971341" style="color: rgb(36,243,122)">武士（萊希拉姆）</span>
+
+
+        <span class="chatlog__timestamp">28-Jan-21 11:41 PM</span>
+
+            <div class="chatlog__message " data-message-id="804375649988771851" id="message-804375649988771851" title="Message sent: 28-Jan-21 11:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">讚欸www</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="804375733245575228" id="message-804375733245575228" title="Message sent: 28-Jan-21 11:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">都有畫出來 多做嘗試就會囉</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="804376759705141298" id="message-804376759705141298" title="Message sent: 28-Jan-21 11:46 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">其實他是有流程的 像這樣</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="804376774254788648" id="message-804376774254788648" title="Message sent: 28-Jan-21 11:46 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/unknown-646CF.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/unknown-646CF.png" alt="Image attachment" title="Image: unknown.png (464.04 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="804377001066365029" id="message-804377001066365029" title="Message sent: 28-Jan-21 11:47 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">但畫工不是很好 算了嗚嗚</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="868768052135755806" id="message-868768052135755806" title="Message sent: 25-Jul-21 04:14 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">黑歷史但我還是很喜歡這對XDDD</span>
+
+                        </div>
+                    </div>
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/1572740068855-54B0B.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/1572740068855-54B0B.png" alt="Image attachment" title="Image: 1572740068855.png (670.97 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6e6fa48d6899d10101992e9558b7a17f-7230E.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Water Melon#5885" data-user-id="338608396473466890" style="color: rgb(36,243,122)">Water Melon(超甲狂犀)ovo(？</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="868768764831887360" id="message-868768764831887360" title="Message sent: 25-Jul-21 04:16 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我想想可以填什麼ovo</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="868768835120017428" id="message-868768835120017428" title="Message sent: 25-Jul-21 04:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><s>洞房</s></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol"></div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+                <span class="chatlog__reference-name" title="銀月#4086" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+                <div class="chatlog__reference-content">
+                    <span class="chatlog__reference-link" onclick="scrollToMessage(event, &#39;868768835120017428&#39;)">
+<s>洞房</s>                    </span>
+
+                </div>
+        </div>
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="868768952011063296" id="message-868768952011063296" title="Message sent: 25-Jul-21 04:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><s>你懂我</s></span>
+
+                                <span class="chatlog__edited-timestamp" title="25-Jul-21 04:17 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6e6fa48d6899d10101992e9558b7a17f-7230E.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Water Melon#5885" data-user-id="338608396473466890" style="color: rgb(36,243,122)">Water Melon(超甲狂犀)ovo(？</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="868768994079957032" id="message-868768994079957032" title="Message sent: 25-Jul-21 04:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">啊 <s>修幹ovo</s></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="868769050568843284" id="message-868769050568843284" title="Message sent: 25-Jul-21 04:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">更直接W</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="868769140612157460" id="message-868769140612157460" title="Message sent: 25-Jul-21 04:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><s>我心思邪惡<img loading="lazy" class="emoji " alt="Just_kidding" title="Just_kidding" src="https://cdn.discordapp.com/emojis/795276987836923904.png"> 大家都知道</s></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="868769255217307719" id="message-868769255217307719" title="Message sent: 25-Jul-21 04:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">這兩位啊 希望他們結婚的人特別多.jpg</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="868769566682136586" id="message-868769566682136586" title="Message sent: 25-Jul-21 04:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我想想(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="868769697145978890" id="message-868769697145978890" title="Message sent: 25-Jul-21 04:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">好 沒事(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="868770508341149727" id="message-868770508341149727" title="Message sent: 25-Jul-21 04:23 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我那兩個朋友：*約出去玩
+我：</span>
+
+                        </div>
+                    </div>
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/FB_IMG_1593330199259-9B9CA.jpg">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/FB_IMG_1593330199259-9B9CA.jpg" alt="Image attachment" title="Image: FB_IMG_1593330199259.jpg (34.38 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="868770597683990618" id="message-868770597683990618" title="Message sent: 25-Jul-21 04:24 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">嘿咻嘿咻(X</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="868770674204880927" id="message-868770674204880927" title="Message sent: 25-Jul-21 04:24 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="Just_kidding" title="Just_kidding" src="https://cdn.discordapp.com/emojis/795276987836923904.png"> <img loading="lazy" class="emoji emoji--large" alt="👉" title="point_right" src="https://twemoji.maxcdn.com/2/svg/1f449.svg"> <img loading="lazy" class="emoji emoji--large" alt="👌" title="ok_hand" src="https://twemoji.maxcdn.com/2/svg/1f44c.svg"></span>
+
+                                <span class="chatlog__edited-timestamp" title="25-Jul-21 04:25 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="868770762457251881" id="message-868770762457251881" title="Message sent: 25-Jul-21 04:24 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">無聊 我要看過程!! (X</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol"></div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+                <span class="chatlog__reference-name" title="星花#4151" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+                <div class="chatlog__reference-content">
+                    <span class="chatlog__reference-link" onclick="scrollToMessage(event, &#39;868770674204880927&#39;)">
+<img loading="lazy" class="emoji " alt="Just_kidding" title="Just_kidding" src="https://cdn.discordapp.com/emojis/795276987836923904.png"> <img loading="lazy" class="emoji " alt="👉" title="point_right" src="https://twemoji.maxcdn.com/2/svg/1f449.svg"> <img loading="lazy" class="emoji " alt="👌" title="ok_hand" src="https://twemoji.maxcdn.com/2/svg/1f44c.svg">                    </span>
+
+                        <span class="chatlog__reference-edited-timestamp" title="25-Jul-21 04:25 PM">(edited)</span>
+                </div>
+        </div>
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771143786582027" id="message-868771143786582027" title="Message sent: 25-Jul-21 04:26 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/93c3985cf11f9209e989ed4f9afee29c74c63866-1A7D0.png">
+                                <img class="chatlog__attachment-media" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/93c3985cf11f9209e989ed4f9afee29c74c63866-1A7D0.png" alt="Image attachment" title="Image: 93c3985cf11f9209e989ed4f9afee29c74c63866.png (69.08 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771208710201375" id="message-868771208710201375" title="Message sent: 25-Jul-21 04:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">無聊 我要動圖(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771261088665610" id="message-868771261088665610" title="Message sent: 25-Jul-21 04:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">自己上網找ww</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol"></div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+                <span class="chatlog__reference-name" title="星花#4151" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+                <div class="chatlog__reference-content">
+                    <span class="chatlog__reference-link" onclick="scrollToMessage(event, &#39;868768052135755806&#39;)">
+黑歷史但我還是很喜歡這對XDDD                    </span>
+
+                </div>
+        </div>
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771506241564682" id="message-868771506241564682" title="Message sent: 25-Jul-21 04:27 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">話說我當時畫錯了
+我以為左邊那個人設是女的
+結果實際上是男的<img loading="lazy" class="emoji " alt="Just_kidding" title="Just_kidding" src="https://cdn.discordapp.com/emojis/795276987836923904.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771760810623066" id="message-868771760810623066" title="Message sent: 25-Jul-21 04:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">然後你還幫他畫了boing boing<img loading="lazy" class="emoji " alt="Just_kidding" title="Just_kidding" src="https://cdn.discordapp.com/emojis/795276987836923904.png"></span>
+
+                                <span class="chatlog__edited-timestamp" title="25-Jul-21 04:29 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771793941442560" id="message-868771793941442560" title="Message sent: 25-Jul-21 04:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">對(掩面</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6e6fa48d6899d10101992e9558b7a17f-7230E.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Water Melon#5885" data-user-id="338608396473466890" style="color: rgb(36,243,122)">Water Melon(超甲狂犀)ovo(？</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771820885659669" id="message-868771820885659669" title="Message sent: 25-Jul-21 04:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><a href="https://tenor.com/view/yaranaika-anime-gif-7535059">https://tenor.com/view/yaranaika-anime-gif-7535059</a></span>
+
+                        </div>
+                    </div>
+
+
+                        <div class="chatlog__embed">
+                                <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                            <div class="chatlog__embed-content-container">
+                                <div class="chatlog__embed-content">
+                                    <div class="chatlog__embed-text">
+
+
+
+                                    </div>
+
+                                        <div class="chatlog__embed-thumbnail-container">
+                                            <a class="chatlog__embed-thumbnail-link" href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/tenor-7DD3F.png">
+                                                <img class="chatlog__embed-thumbnail" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/tenor-7DD3F.png" alt="Thumbnail" loading="lazy">
+                                            </a>
+                                        </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="868771838954717224" id="message-868771838954717224" title="Message sent: 25-Jul-21 04:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771882332221540" id="message-868771882332221540" title="Message sent: 25-Jul-21 04:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">救命W</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771912363421717" id="message-868771912363421717" title="Message sent: 25-Jul-21 04:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">優秀</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771923289591808" id="message-868771923289591808" title="Message sent: 25-Jul-21 04:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">亞拉那一卡(X</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="868771938930163803" id="message-868771938930163803" title="Message sent: 25-Jul-21 04:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">果然是好男人 (???</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="星花#4151" data-user-id="676763195645493278" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:30 PM</span>
+
+            <div class="chatlog__message " data-message-id="868772194266804254" id="message-868772194266804254" title="Message sent: 25-Jul-21 04:30 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">兩張圖是0號動跟1號動的差別(X</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol"></div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6e6fa48d6899d10101992e9558b7a17f-7230E.png" alt="Avatar" loading="lazy">
+                <span class="chatlog__reference-name" title="Water Melon#5885" style="color: rgb(36,243,122)">Water Melon(超甲狂犀)ovo(？</span>
+                <div class="chatlog__reference-content">
+                    <span class="chatlog__reference-link" onclick="scrollToMessage(event, &#39;868771820885659669&#39;)">
+<a href="https://tenor.com/view/yaranaika-anime-gif-7535059">https://tenor.com/view/yaranaika-anime-gif-7535059</a>                    </span>
+
+                </div>
+        </div>
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/7cda7c37af7aa55f3cb8ec0d652faf73-E5624.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="銀月#4086" data-user-id="597410556718219275" style="color: rgb(36,243,122)">銀月(露奈亞拉)</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="868772325770788905" id="message-868772325770788905" title="Message sent: 25-Jul-21 04:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你很勇噢(X</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol"></div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+                <span class="chatlog__reference-name" title="星花#4151" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+                <div class="chatlog__reference-content">
+                    <span class="chatlog__reference-link" onclick="scrollToMessage(event, &#39;868772194266804254&#39;)">
+兩張圖是0號動跟1號動的差別(X                    </span>
+
+                </div>
+        </div>
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="868772384461701171" id="message-868772384461701171" title="Message sent: 25-Jul-21 04:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">太懂了</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6e6fa48d6899d10101992e9558b7a17f-7230E.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Water Melon#5885" data-user-id="338608396473466890" style="color: rgb(36,243,122)">Water Melon(超甲狂犀)ovo(？</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="868772405248667649" id="message-868772405248667649" title="Message sent: 25-Jul-21 04:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><a href="https://tenor.com/view/finger-hole-kuso-miso-technique-manga-gif-5595015">https://tenor.com/view/finger-hole-kuso-miso-technique-manga-gif-5595015</a></span>
+
+                        </div>
+                    </div>
+
+
+                        <div class="chatlog__embed">
+                                <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                            <div class="chatlog__embed-content-container">
+                                <div class="chatlog__embed-content">
+                                    <div class="chatlog__embed-text">
+
+
+
+                                    </div>
+
+                                        <div class="chatlog__embed-thumbnail-container">
+                                            <a class="chatlog__embed-thumbnail-link" href="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/raw-8522B">
+                                                <img class="chatlog__embed-thumbnail" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/raw-8522B" alt="Thumbnail" loading="lazy">
+                                            </a>
+                                        </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="868772452652699669" id="message-868772452652699669" title="Message sent: 25-Jul-21 04:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><s>找到更棒的ovo</s></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol"></div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/6d055fb45be33024f28c127ace63e7e6-75009.png" alt="Avatar" loading="lazy">
+                <span class="chatlog__reference-name" title="星花#4151" style="color: rgb(36,243,122)">&gt;(&#176; //   O  \\  &#176;)&lt;星花金色鯉魚王生魚片</span>
+                <div class="chatlog__reference-content">
+                    <span class="chatlog__reference-link" onclick="scrollToMessage(event, &#39;868771923289591808&#39;)">
+亞拉那一卡(X                    </span>
+
+                </div>
+        </div>
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="%E9%BB%91%E6%AD%B7%E5%8F%B2%E5%8D%80-2021-09-21.html_Files/d5aa1f37c380a62657d3890d58061705-73A2A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="鬼狐律希#4697" data-user-id="601039145917218837" style="color: rgb(36,243,122)">鬼狐律希（阿羅拉九尾）</span>
+
+
+        <span class="chatlog__timestamp">25-Jul-21 04:32 PM</span>
+
+            <div class="chatlog__message " data-message-id="868772789258174474" id="message-868772789258174474" title="Message sent: 25-Jul-21 04:32 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">巴萊那一卡</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 137 message(s)</div>
+</div>
+
+</body>
+
+</html>
